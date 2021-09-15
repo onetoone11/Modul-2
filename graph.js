@@ -1,75 +1,97 @@
-/*  Example of adjacency matrix:
-    1  2  3  4  5  6
-   -----------------
-1 | 0  0  0  0  0  0
-2 | 0  0  0  0  0  0
-3 | 0  0  0  0  0  0
-4 | 0  1  0  0  0  0
-5 | 0  0  1  0  0  0
-6 | 0  0  0  0  0  0
-
-*/
-function Graph() {
+const createGraph = (...nodeID) => {
     const obj = {};
 
-    const addNode = function (nodeID) { //reminder: update this function to have the ability to take in multiple nodeID's at once
-        //Object.keys(obj) puts obj's keys into an array, which .map iterates through. 'element' in '.map' is the key of the current array cell.
-        //
-        Object.keys(obj).map(element => obj[element][nodeID] = false)
-        obj[nodeID] = {};   //this is necessary otherwise obj[nodeID]["somestring"] cannot be assigned a value
-        Object.keys(obj).map(element => obj[nodeID][element] = false)
-        //explanation
-    }
-
-    const addEdge = function (nodeID_Source, nodeID_Target) {//adds an edge between two nodes
-        obj[nodeID_Source][nodeID_Target] = true;//true means an edge is present between the two nodes, false means an edge is absent
-    }
-
-    const getOutAdjacents = function (nodeID) {
-        return Object.entries(obj[nodeID]).filter(([key, value]) => value === false).map(element => element[0])
-    }
-
-    const getEdge = function (nodeID1, nodeID2) {
-        return obj[nodeID1][nodeID2];
-    }
-
-    const getObject = function() {
-        return obj;
-    }
-
-    return {addNode,addEdge,getOutAdjacents,getEdge,getObject};
-}
-/*
-functions i'd like to add:
-for the primitive "Graph();":
-    graph.addNode("node-ID")
-    graph.addEdge("source", "target", "edge-ID"[optional])
-    graph.removeNode("node-ID") //removes this node, including all the edges connected to it
-    graph.removeEdge("source", "target") OR graph.removeEdge("edge-ID")
-    graph.getOutEdges("node-ID") //returns an array of edges pointing outwards from "node-ID", and the nodes they are pointing towards
-    graph.getOutAdjacents("node-ID") //returns an array of node-IDs which this node's edges lead to
-    graph.getNodes(); //returns an array of all node-IDs in a graph
-
-    createLookUp(...args: string) // creates a lookup table from an array of strings
-
-The lookup table will be an object, with every key being a node-ID
-
-const nodeLookUp = {
-    node-ID1 : {
-
-    }
-
+    [...nodeID].map(element1 => { obj[element1] = {};[...nodeID].map(element2 => { obj[element1][element2] = false }) });
+    return obj;
 }
 
-function Graph() {
-    var nodes = ["start", ""];
-}
-//Get node command, gets the specified node and its children
+const addEdge = graph => nodeID1 => nodeID2 => {
+    const obj = {};
 
-
-var Graph = {
-    "node1": { "node1": "node1->node1", "node2": "node" }
-    // nodes.map(e => obj[e] = {});
-    // nodes.map(e => nodes.map(el => obj[e][el] = {}));
+    Object.assign(obj, graph);
+    obj[nodeID1][nodeID2] = true;
+    return obj;
 }
-*/
+
+const removeEdge = graph => nodeID1 => nodeID2 => {
+    const obj = {};
+
+    Object.assign(obj, graph);
+    obj[nodeID1][nodeID2] = false;
+    return obj;
+}
+
+//IMPORTANT: Implement more basic operations on graphs. Also, expand this to handle duplicates
+const union = graph1 => graph2 => {
+    const obj = {};
+    const arr = [...Object.keys(graph1), ...Object.keys(graph2)];
+
+    arr.map(element1 => {
+        obj[element1] = {}; 
+        arr.map(element2 => 
+            obj[element1][element2] = (graph1[element1] && graph1[element1][element2]) || (graph2[element1] && graph2[element1][element2]) ? true : false)
+    });
+
+    return obj;
+}
+
+const difference = graph1 => graph2 => {
+    const set = new Set();//very ugly function, I am not proud of it ;(
+
+    Object.keys(graph1).map(element => set.add(element));
+    Object.keys(graph2).map(element => set.delete(element));
+
+    const obj = createGraph(...set.keys());
+    [...set.keys()].map(element1 => [...set.keys()].map(element2 => obj[element1][element2] = graph1[element1][element2]));
+
+    return obj;
+}
+
+const intersection = graph1 => graph2 => {
+    return difference(graph1)(difference(graph1)(graph2));
+}
+
+const removeNodes = graph => (...nodeID) => {
+    return difference(graph)(createGraph(...nodeID));
+}
+
+const addNodes = graph => (...nodeID) => {
+    return union(graph)(createGraph(...nodeID));
+}
+
+const adjacentOutNodes = graph => nodeID => {
+    return Object.entries(graph[nodeID]).filter(([key, value]) => value === true).map(element => element[0]);
+}
+
+const transpose = graph => {
+    const obj = {};
+
+    Object.keys(graph).map(element1 => Object.keys(graph).map(element2 => {
+        obj[element2] ??= {};
+        obj[element2][element1] = graph[element1][element2];
+    }));
+
+    return obj;
+}
+
+const adjacentInNodes = graph => nodeID => {
+    return adjacentOutNodes(transpose(graph))(nodeID);
+    //Object.entries(transpose(graph)[nodeID]).filter(([key, value]) => value === true).map(element => element[0]);
+}
+
+const findSinks = graph => {
+    return Object.keys(graph).filter(element => adjacentOutNodes(graph)(element).length === 0);
+}
+
+const findSources = graph => {
+    return findSinks(transpose(graph));
+    //Object.keys(graph).filter(element => adjacentInNodes(graph)(element).length === 0);
+}
+
+const createTree = ID => tree => {
+    return union(createGraph(root))(transpose(createGraph(root)));
+}
+
+const addTree = tree => rootID => {
+
+}
