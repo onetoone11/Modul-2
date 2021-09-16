@@ -83,6 +83,15 @@ const adjacentInNodes = graph => nodeID => {
     //Object.entries(transpose(graph)[nodeID]).filter(([key, value]) => value === true).map(element => element[0]);
 }
 
+const findSinks = graph => {
+    return Object.keys(graph).filter(element => adjacentOutNodes(graph)(element).length === 0);
+}
+
+const findSources = graph => {
+    return findSinks(transpose(graph));
+    //Object.keys(graph).filter(element => adjacentInNodes(graph)(element).length === 0);
+}
+
 const edges = graph => {
     return Object.entries(graph).map(([key1, value1]) => Object.entries(value1).filter(([key2,value2]) => value2 === true).map(([key2, value2]) => [key1, key2])).flat(1);
 }
