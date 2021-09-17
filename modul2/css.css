@@ -1,0 +1,72 @@
+*{
+    font-family: "Schoolbook";
+}
+
+/* @font-face {
+    font-family: "Schoolbook";
+    src: url("texgyreschola-regular.otf"),
+         url("texgyreschola-italic.otf"),
+         url("texgyreschola-bolditalic.otf"),
+         url("texgyreschola-bold.otf");
+    } */
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.img{
+    border: 20px solid green;
+    width: 50%;
+}
+
+.btn{
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+.play-button{  /*Fixa till knappen så att den är i mitten, ska inte ha en fixed position för att då blir det konstigt när man man "hover"*/
+    color: green;
+    position: fixed;
+    right: 47%;
+    top: 60%;
+    border: 5px solid green;
+    font-size: 20px;
+    border-radius: 8px;
+}
+
+.play-button:hover{
+    filter: brightness(0.95);
+    font-size: 25px;
+}
+
+.link-btn{
+    color: green;
+    text-decoration: none;
+}
+
+/* Sprite */
+
+#sprite{
+    background-color: red;
+    height: 10px;
+    width: 10px;
+}
+
+/* Background */
+
+.background{
+    max-width: 40%;
+    max-height: 40%;
+    border-radius: 8px;
+}
+
+img{
+    width: 100%;
+}
