@@ -70,3 +70,78 @@ body{
 img{
     width: 100%;
 }
+ .test{
+     border: 2px solid blue;
+     height: 90px;
+     width: 75px;
+     position: absolute;
+ }
+
+ .test2{
+    border: 2px solid blue;
+    height: 90px;
+    width: 75px;
+    position: absolute;
+}
+
+.test3{
+    border: 2px solid blue;
+    height: 90px;
+    width: 75px;
+    position: absolute;
+}
+
+.test4{
+    border: 2px solid blue;
+    height: 90px;
+    width: 75px;
+    position: absolute;
+}
+
+ .p{
+     height: 2px;
+     width: 2px;
+     position: absolute;
+ }
+
+ #p1{
+     background-color: red;
+ }
+
+ #p2{
+     background-color: yellow;
+ }
+
+ #p3{
+     background-color: pink;
+ }
+
+ #p4{
+     background-color: palegreen;
+ }
+
+ .btn-absolute{
+     position: absolute;
+ }
+
+.show{
+    display: none;
+}
+
+.conversation-log{
+    max-width: 40%;
+    max-height: 40%;
+    border-radius: 8px;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.w-10{
+    width: 10%;
+}
+
+.char{
+    display: none;
+}
