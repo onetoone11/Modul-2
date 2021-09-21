@@ -3,6 +3,23 @@
 // let audio = new Audio("img/wii.mp3");
 // audio.play();
 
+
+
+let health;
+
+if(localStorage.health == undefined){
+    health = 100;
+}
+else{
+    health = Number(localStorage.health);
+}
+
+
+
+// let mystorage = window.localStorage
+
+// localStorage.setItem("health", health);
+
 let sprite = document.querySelector('#sprite');
 let backgroundMap = document.querySelector('#backgroundMap');
 
@@ -24,9 +41,83 @@ let lisa = document.querySelector('.lisa');
 let patrick = document.querySelector('.patrick');
 let bob = document.querySelector('.bob');
 let mandy = document.querySelector('.mandy');
+let player = document.querySelector('.player');
+
+let pPlayer = document.querySelector('.pPlayer');
+let pWorker = document.querySelector('.pWorker');
+
+let placeH1 = document.querySelector('.place');
+
+let placeH2 = document.querySelector('.placeH2');
+
+let placeH5 = document.querySelector('.placeH5');
+
+let yNBtns = document.querySelector('.yNBtns');
+
+let playerBar = document.querySelector('.playerBar');
+
+
+
+
+
+
+
+
+let money = 5;
+
+let key = 0;
+
+
+
+
 
 
 sprite.style.backgroundColor = "green";
+
+const grinderContent = {
+
+    building: 'grinder',
+    workerName: 'Patrick',
+    workerImg: 'img/patrickGrinder.png',
+    id: 1
+
+};
+
+const houseContent = {
+    
+    building: 'house',
+    workerName: 'Lisa',
+    workerImg: 'img/lisaHouse.png',
+    id: 2
+
+}
+
+const fishHouseContent = {
+
+    building: 'fishHouse',
+    workerName: 'Bob',
+    workerImg: 'img/bobFishHouse.png',
+    id: 3
+
+}
+
+const barnContent = {
+
+    building: 'barn',
+    workerName: 'Mandy',
+    workerImg: 'img/mandyBarn.png',
+    id: 4
+
+}
+
+const playerContent = {
+
+    playerName: 'You',
+    playerImg: 'img/player.png',
+    id: 5
+
+}
+
 
 // Size
 
@@ -60,17 +151,52 @@ let spriteRightInnerPositionOfMap = spriteLeftInnerPositionOfMap + backgroundMap
 patrick.style.top = parseInt(screenHeight*0.61) + 'px';
 patrick.style.left = parseInt(screenWidth*0.61) + 'px';
 
+lisa.style.top = parseInt(screenHeight*0.61) + 'px';
+lisa.style.left = parseInt(screenWidth*0.61) + 'px';
+
+bob.style.top = parseInt(screenHeight*0.61) + 'px';
+bob.style.left = parseInt(screenWidth*0.61) + 'px';
+
+mandy.style.top = parseInt(screenHeight*0.61) + 'px';
+mandy.style.left = parseInt(screenWidth*0.61) + 'px';
+
+player.style.top = parseInt(screenHeight*0.61) + 'px';
+player.style.left = parseInt(screenWidth*0.29) + 'px';
+
+    // Character Text Position
+
+pPlayer.style.top = parseInt(screenHeight*0.57) + 'px';
+pPlayer.style.left = parseInt(screenWidth*0.37) + 'px';
+
+pWorker.style.top = parseInt(screenHeight*0.57) + 'px';
+pWorker.style.left = parseInt(screenWidth*0.61) + 'px';
+
+placeH1.style.top = parseInt(screenHeight*0.1) + 'px';
+
+placeH2.style.top = parseInt(screenHeight*0.15) + 'px';
+
+placeH5.style.top = parseInt(screenHeight*0.33) + 'px';
+
+yNBtns.style.top = parseInt(screenHeight*0.5) + 'px';
+
 
     // Grinder Position
 
-let grinder = [screenHeight*0.44, screenHeight*0.565, screenWidth*0.46, screenWidth*0.52, "Grinder"];
+let grinder = [screenHeight*0.44, screenHeight*0.565, screenWidth*0.46, screenWidth*0.52, "grinder"];
 
-let house = [screenHeight*0.31, screenHeight*0.43, screenWidth*0.365, screenWidth*0.425, "House"];
+let house = [screenHeight*0.31, screenHeight*0.43, screenWidth*0.365, screenWidth*0.425, "house"];
 
-let fish = [screenHeight*0.56, screenHeight*0.69, screenWidth*0.63, screenWidth*0.69, "FishHouse"];
+let fish = [screenHeight*0.56, screenHeight*0.69, screenWidth*0.63, screenWidth*0.69, "fishHouse"];
 
-let barn = [screenHeight*0.56, screenHeight*0.69, screenWidth*0.32, screenWidth*0.38, "Barn"]; 
+let barn = [screenHeight*0.56, screenHeight*0.69, screenWidth*0.32, screenWidth*0.38, "barn"]; 
 
+
+// ...
+
+let grinderQuests = ['', ''];
+
+grinderQuests[0] = ['Keyquest', 'Someone dropped all the keys downstairs, can you please help me find them all?'];
+grinderQuests[1] = ['Treequest', 'A tree just fell, can you help me move it?'];
 
 
 // Sprite, Position
@@ -105,6 +231,35 @@ window.addEventListener('keydown', (event) => {
     if(event.key == 'ArrowLeft' && parseInt(sprite.style.left) > spriteLeftInnerPositionOfMap){
         sprite.style.left = parseInt(sprite.style.left) - spriteSpeed + 'px';
     }
+    if(health < 20){
+        exhausted();
+    }
+    if(money < 5){
+        broke();
+    }
+    if(money > 100){
+        rich();
+    }
+
+    
+    
+});
+
+window.addEventListener('click', (event) => {
+    
+    if(health < 20){
+        exhausted();
+    }
+    if(money < 5){
+        broke();
+    }
+    if(money > 100){
+        rich();
+    }
+
+  
+
+    
 });
 
 
@@ -149,74 +304,153 @@ function buttons(){
 }
 
 function hideContent(){
-    hide.style.display = "none";
-    show.style.display = "block";
 
+    if(hide.style.display == "none" && show.style.display == "block"){
+        hide.style.display = "block";
+        show.style.display = "none";
+        player.style.display = "none";
+        patrick.style.display = "none";
+        lisa.style.display = "none";
+        bob.style.display = "none";
+        mandy.style.display = "none";
+        playerBar.style.backgroundColor = "#384d00";
 
-    let a = btnWalkIn.id;
+        
 
-    conversationLog(a);
+    }
+    else{
+        hide.style.display = "none";
+        show.style.display = "block";
+        let a = btnWalkIn.id;
 
-    btnWalkIn.id = '';
+        conversationLog(a);
+
+        btnWalkIn.id = '';
+    }
+
+    
 }
 
 
 function conversationLog(place){
 
+
+    // let b = `${place}Content`
+
+    // b = grinderContent
+
+    // alert(b);
+    // alert(place);
+    // alert(grinderContent.building);
+
     if(place == grinderContent.building){
-        
+
         patrick.style.display = "block";
+        player.style.display = 'block';
+        pWorker.innerHTML = grinderContent.workerName;
+        pPlayer.innerHTML = playerContent.playerName;
+        placeH1.innerHTML = grinderContent.building.toUpperCase();
+
+        playerBar.style.backgroundColor = 'transparent';
+
+        let randomQuest = Math.floor(Math.random()*2);
+        
+        // alert('Do you want to play a round of ' + grinderQuests[randomQuest][0] + ' ' + grinderQuests[randomQuest][1]);
+
+        placeH2.innerHTML = grinderQuests[randomQuest][0];
+        placeH5.innerHTML = grinderQuests[randomQuest][1];
+
+    }
+    else if(place == houseContent.building){
+
+        lisa.style.display = 'block';
+        player.style.display = 'block';
+        pWorker.innerHTML = houseContent.workerName;
+        pPlayer.innerHTML = playerContent.playerName;
+        placeH1.innerHTML = houseContent.building.toUpperCase();
+
+        playerBar.style.backgroundColor = 'transparent';
+
+    }
+    else if(place == fishHouseContent.building){
+        
+        bob.style.display = 'block';
+        player.style.display = 'block';
+        pWorker.innerHTML = fishHouseContent.workerName;
+        pPlayer.innerHTML = playerContent.playerName;
+        placeH1.innerHTML = fishHouseContent.building.toUpperCase();
+
+        playerBar.style.backgroundColor = 'transparent';
+
+    }
+    else if(place == barnContent.building){
+
+        mandy.style.display = 'block';
+        player.style.display = 'block';
+        pWorker.innerHTML = barnContent.workerName;
+        pPlayer.innerHTML = playerContent.playerName;
+        placeH1.innerHTML = barnContent.building.toUpperCase();
+
+        playerBar.style.backgroundColor = 'transparent';
+
     }
     
 }
 
 
-const grinderContent = {
 
-    building: 'Grinder',
-    workerName: 'Patrick',
-    workerImg: 'img/patrickGrinder.png',
-    id: 1
-
-};
-
-const houseContent = {
+function takeHealth(healthVal){
+    if(health <= 0 || health - healthVal < 0){
+        alert("Du är för trött!");
+    }
+    else{
+        health -= healthVal;
+        alert(health);
+        document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+        localStorage.setItem('health', health);
+    }
     
-    building: 'House',
-    workerName: 'Lisa',
-    workerImg: 'img/lisaHouse.png',
-    id: 2
-
-}
-
-const fishHouseContent = {
-
-    building: 'FishHouse',
-    workerName: 'Bob',
-    workerImg: 'img/bobFishHouse.png',
-    id: 3
-
-}
-
-const barnContent = {
-
-    building: 'Barn',
-    workerName: 'Mandy',
-    workerImg: 'img/mandyBarn.png',
-    id: 4
-
 }
 
 
 
+function takeMoney(price){
+    if(money <= 0 || money - price < 0 ){
+        alert('Du har inte råd!');
+    }
+    else{
+        money -= price;
+        alert(money);
+        document.querySelector('.pCoins').innerHTML = `<i class="fas fa-coins coins playerBarIcon"></i>   ${money}`;
+    }
+}
 
 
 
+function useKey(keys){
+    if(key <= 0 || key - keys < 0){
+        alert('Du har inte tillräckligt med nycklar');
+    }
+    else{
+        key -= keys;
+        alert(key);
+        document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${key}`;
+    }
+}
+
+
+function exhausted(){
+    alert("YOU ARE EXHAUSTED! Soon you will probably die... ")
+}
+
+function broke(){
+    alert("YOU ARE BROKE!");
+}
+
+function rich(){
+    alert("YOU ARE RICH");
+}
 
 
 
-
-
-
-
-
+document.querySelector('.pBolt').innerHTML = '<i class="fas fa-bolt bolt playerBarIcon"></i>   ' + health;
