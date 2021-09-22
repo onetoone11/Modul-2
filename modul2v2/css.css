@@ -1,0 +1,212 @@
+*{
+    font-family: "Schoolbook";
+}
+
+/* @font-face {
+    font-family: "Schoolbook";
+    src: url("texgyreschola-regular.otf"),
+         url("texgyreschola-italic.otf"),
+         url("texgyreschola-bolditalic.otf"),
+         url("texgyreschola-bold.otf");
+    } */
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+
+.center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.img{
+    border: 20px solid green;
+    width: 50%;
+}
+
+.btn{
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+.play-button{  /*Fixa till knappen så att den är i mitten, ska inte ha en fixed position för att då blir det konstigt när man man "hover"*/
+    color: green;
+    position: fixed;
+    right: 47%;
+    top: 60%;
+    border: 5px solid green;
+    font-size: 20px;
+    border-radius: 8px;
+}
+
+.play-button:hover{
+    filter: brightness(0.95);
+    font-size: 25px;
+}
+
+.link-btn{
+    color: green;
+    text-decoration: none;
+}
+
+/* Sprite */
+
+#sprite{
+    background-color: red;
+    height: 10px;
+    width: 10px;
+}
+
+/* Background */
+
+.background{
+    max-width: 40%;
+    max-height: 40%;
+    border-radius: 8px;
+}
+
+img{
+    width: 100%;
+}
+ .test{
+     border: 2px solid blue;
+     height: 90px;
+     width: 75px;
+     position: absolute;
+ }
+
+ .test2{
+    border: 2px solid blue;
+    height: 90px;
+    width: 75px;
+    position: absolute;
+}
+
+.test3{
+    border: 2px solid blue;
+    height: 90px;
+    width: 75px;
+    position: absolute;
+}
+
+.test4{
+    border: 2px solid blue;
+    height: 90px;
+    width: 75px;
+    position: absolute;
+}
+
+ .p{
+     height: 2px;
+     width: 2px;
+     position: absolute;
+ }
+
+ #p1{
+     background-color: red;
+ }
+
+ #p2{
+     background-color: yellow;
+ }
+
+ #p3{
+     background-color: pink;
+ }
+
+ #p4{
+     background-color: palegreen;
+ }
+
+ .btn-absolute{
+     position: absolute;
+ }
+
+.show{
+    display: none;
+}
+
+canvas{
+    display: block;
+}
+
+.conversation-log{
+    max-width: 40%;
+    max-height: 40%;
+    border-radius: 8px;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.w-10{
+    width: 10%;
+}
+
+.char{
+    display: none;
+    image-rendering: pixelated;
+}
+.place{
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.placeH2{
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.placeH5{
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.yNBtns{
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.playerBar{
+    background-color: #384d00;
+    height: 20%;
+    width: 7%;
+    border-radius: 20px;
+    top: 10%;
+    left: 67%;
+    transform: translate(-67%);
+    padding-left: 10px;
+    /* box-shadow: 1px 1px 1px #333; */
+    border: 1px #333;
+
+}
+
+.playerBarIcon{
+    padding: 0 20px 0 10px;
+}
+
+.bolt{
+    color: lightskyblue;
+    text-shadow: 1px 1px 1px #333;
+}
+
+.coins{
+    color: gold;
+    text-shadow: 1px 1px 1px #333;
+}
+
+.key{
+    color: lightcoral;
+    text-shadow: 1px 1px 1px #333;
+}
+
+
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
+}

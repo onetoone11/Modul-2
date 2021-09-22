@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Name</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="canvas" style=" position:fixed; display: block;"></canvas>
+    </div>
+
+    <audio loop autoplay>
+        <source src="img/wii.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="absolute playerBar">
+
+        <p class="bolt pBolt"><i class="fas fa-bolt bolt playerBarIcon"></i>   100</p>
+        <p class="coins pCoins"><i class="fas fa-coins coins playerBarIcon"></i>   5</p>
+        <p class="key pKey"><i class="fas fa-key key playerBarIcon"></i>   0</p>
+
+    </div>
+
+
+    <div class="hide">
+
+        
+        <div id="sprite">
+            <!-- <img src="img/mapStartPNG.png" alt=""> -->
+        </div>
+
+        <!-- <div class="test"></div>
+        <div class="test2"></div>
+        <div class="test3"></div>
+        <div class="test4"></div>
+        <div class="p" id="p1"></div>
+        <div class="p" id="p2"></div>
+        <div class="p" id="p3"></div>
+        <div class="p" id="p4"></div> -->
+
+        <button onclick="hideContent()" class="btn button btn-absolute btn-walkIn">Gå In</button>
+
+    
+
+         <div id="backgroundMap" class="background center"><img class="" src="img/3.png" alt=""></div>
+
+
+    </div>
+
+    
+
+            <img src="img/patrickGrinder.png" class="absolute w-10 patrick char" id="1" alt="">
+
+            <img src="img/lisaHouse.png" class="absolute w-10 lisa char" id="2" alt="">
+
+            <img src="img/bobFishHouse.png" class="absolute w-10 bob char" id="3" alt="">
+
+            <img src="img/mandyBarn.png" class="absolute w-10 mandy char" id="4" alt="">
+
+            <img src="img/player.png" class="absolute w-10 player char" id="5" alt="">
+
+    <div class="show">
+        
+
+        <h1 class="absolute place"></h1>
+        <h2 class="absolute placeH2"></h2>
+
+        <h5 class="absolute placeH5"></h5>
+
+        <p class="absolute pWorker"></p>
+
+        <p class="absolute pPlayer"></p>
+
+        <div class="center conversation-log"><img src="img/map.png" alt=""></div>
+
+        <div class="yNBtns absolute">
+
+            <button onclick="takeHealth (10)" class="yes">Yes -10 <i class="fas fa-bolt bolt"></i></button>
+
+            <button onclick="hideContent()" class="no">No</button>
+
+        </div>
+
+
+    </div>
+    <script src="script.js">
+
+
+
+    </script>
+
+
+</body>
+</html>
