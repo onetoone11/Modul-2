@@ -201,3 +201,56 @@ img{
 
 
 
+
+/* Center  */
+
+.centerO{
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.centerText{
+    text-align: center;
+}
+
+
+.pbm-0{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.pb-1{
+    padding-bottom: 1rem;
+}
+
+.ptm-0{
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.red{
+    color: lightcoral;
+    text-shadow: 1px 1px 1px #333;
+}
+
+
+.questBackground{
+    max-width: 40%;
+    max-height: 40%;
+    border-radius: 8px;
+}
+
+
+#questRandom{
+    display: none;
+}
+
+
+
+
+.questInformation{
+    display: none;
+}
+
+
+
+
