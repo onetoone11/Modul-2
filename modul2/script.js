@@ -3,31 +3,50 @@
 // let audio = new Audio("img/wii.mp3");
 // audio.play();
 
-
-
 let health;
 
+let money;
+
+let earnedkey;
+
 if(localStorage.health == undefined){
-    health = 100;
+    health = 1000;
 }
 else{
     health = Number(localStorage.health);
 }
 
+if(localStorage.money == undefined){
+    money = 5;
+}
+else{
+    money = Number(localStorage.money);
+}
+
+if(localStorage.earnedkey == undefined){
+    earnedkey = 0;
+}
+else{
+    earnedkey = Number(localStorage.earnedkey);
+}
 
 
-// let mystorage = window.localStorage
 
-// localStorage.setItem("health", health);
+
+document.querySelector('.pBolt').innerHTML = '<i class="fas fa-bolt bolt playerBarIcon"></i>   ' + health; 
+
+document.querySelector('.pCoins').innerHTML = '<i class="fas fa-coins coins playerBarIcon"></i>   ' + money; 
+
+document.querySelector('.pKey').innerHTML = '<i class="fas fa-key key playerBarIcon"></i>   ' + earnedkey;
+
+
+
+
+
 
 let sprite = document.querySelector('#sprite');
 let backgroundMap = document.querySelector('#backgroundMap');
 
-
-let test = document.querySelector('.test');
-let test2 = document.querySelector('.test2');
-let test3 = document.querySelector('.test3');
-let test4 = document.querySelector('.test4');
 let btnWalkIn = document.querySelector('.btn-walkIn');
 
 let hide = document.querySelector('.hide');
@@ -58,14 +77,26 @@ let playerBar = document.querySelector('.playerBar');
 
 
 
+let questRandom = document.querySelector('#questRandom');
+
+
+let questTitle = document.querySelector('.questTitle');
+
+let questNameTitle = document.querySelector('.questNameTitle');
+
+let attemptsLeft = document.querySelector('.attemptsLeft');
+
+let attempts = document.querySelector('#attempts');
+
+let questRandomButtons = document.querySelector('.questRandomButtons');
 
 
 
 
+let questInformation = document.querySelector('.questInformation');
 
-let money = 5;
 
-let key = 0;
+
 
 
 
@@ -138,6 +169,9 @@ backgroundMap.style.paddingTop = parseInt(backgroundMapPaddingTop/2) + 'px';
 let logPaddingTop = (screenHeight - backgroundMapHeight)/2;
 log.style.paddingTop = parseInt(logPaddingTop/2) + 'px';
 
+
+
+
 // Position
 
 let spriteBottomInnerPositionOfMap = parseInt(backgroundMap.style.paddingTop);
@@ -180,6 +214,27 @@ placeH5.style.top = parseInt(screenHeight*0.33) + 'px';
 yNBtns.style.top = parseInt(screenHeight*0.5) + 'px';
 
 
+questTitle.style.top = parseInt(screenHeight*0.1) + 'px';
+questNameTitle.style.top = parseInt(screenHeight*0.18) + 'px';
+
+attemptsLeft.style.top = parseInt(screenHeight*0.3) + 'px';
+
+attempts.style.top = parseInt(screenHeight*0.35) + 'px';
+
+questRandomButtons.style.top = parseInt(screenHeight*0.5) + 'px';
+
+
+questInformation.style.top = parseInt(screenHeight*0.1) + 'px'; 
+
+
+
+btnWalkIn.style.top = screenHeight*0.09 + 'px';
+btnWalkIn.style.left = screenWidth*0.31 + 'px';
+
+
+// questRandom.style.top = parseInt(screenHeight*0.10) + 'px';
+
+
     // Grinder Position
 
 let grinder = [screenHeight*0.44, screenHeight*0.565, screenWidth*0.46, screenWidth*0.52, "grinder"];
@@ -205,6 +260,7 @@ window.addEventListener('load', () => {
     sprite.style.position = 'absolute';
     sprite.style.top = screenHeight*0.62 + 'px';
     sprite.style.left = screenWidth*0.485 + 'px';
+    log.style.display = 'none';
 });
 
 // Sprite, Move
@@ -240,10 +296,7 @@ window.addEventListener('keydown', (event) => {
     if(money > 100){
         rich();
     }
-
-    
-    
-});
+}); 
 
 window.addEventListener('click', (event) => {
     
@@ -255,16 +308,8 @@ window.addEventListener('click', (event) => {
     }
     if(money > 100){
         rich();
-    }
-
-  
-
-    
+    } 
 });
-
-
-btnWalkIn.style.top = screenHeight*0.09 + 'px';
-btnWalkIn.style.left = screenWidth*0.31 + 'px';
 
 
 
@@ -277,8 +322,6 @@ function gamePosition(h1, h2, b1, b2, building){
     h2 = Math.floor(h2);
     b1 = Math.floor(b1);
     b2 = Math.floor(b2);
-
-    
 
     if(parseInt(sprite.style.left) > b1 && parseInt(sprite.style.left) < b2 && parseInt(sprite.style.top) > h1 && parseInt(sprite.style.top) < h2){
         buttonsTrueFalse = true;
@@ -313,15 +356,16 @@ function hideContent(){
         lisa.style.display = "none";
         bob.style.display = "none";
         mandy.style.display = "none";
-        playerBar.style.backgroundColor = "#384d00";
-
-        
+        playerBar.style.backgroundColor = "#384d00";  
 
     }
     else{
         hide.style.display = "none";
         show.style.display = "block";
+        log.style.display = 'block';
         let a = btnWalkIn.id;
+
+        playerBar.style.backgroundColor = 'transparent';
 
         conversationLog(a);
 
@@ -399,15 +443,31 @@ function conversationLog(place){
 
 
 
-function takeHealth(healthVal){
-    if(health <= 0 || health - healthVal < 0){
+function acceptQuest(healthVal, moneyVal){
+    if(health <= 0 || health - healthVal < 0 || money <= 0 || money - moneyVal < 0){
         alert("Du är för trött!");
     }
     else{
         health -= healthVal;
-        alert(health);
+        // alert(health);
         document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
         localStorage.setItem('health', health);
+
+        // Random quest
+
+        playerBar.style.backgroundColor = 'transparent';
+
+        show.style.display = 'none';
+
+        log.style.display = 'block';
+
+        
+
+        questInformation.style.display = 'block';
+
+
+
+
     }
     
 }
@@ -428,13 +488,13 @@ function takeMoney(price){
 
 
 function useKey(keys){
-    if(key <= 0 || key - keys < 0){
+    if(earnedkey <= 0 || earnedkey - keys < 0){
         alert('Du har inte tillräckligt med nycklar');
     }
     else{
-        key -= keys;
-        alert(key);
-        document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${key}`;
+        earnedkey -= keys;
+        alert(earnedkey);
+        document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${earnedkey}`;
     }
 }
 
@@ -453,4 +513,128 @@ function rich(){
 
 
 
-document.querySelector('.pBolt').innerHTML = '<i class="fas fa-bolt bolt playerBarIcon"></i>   ' + health;
+// -----------------------------
+
+
+
+let award = ['key', 'money', 'energy'];
+
+
+let randomAward = Math.floor(Math.random()*3);
+
+let randomAmount = Math.floor(Math.random()*5 + 1);
+
+
+// QuestRandom
+
+function questRandomButton(buttonId){
+
+    let randomNumber = Math.floor(Math.random()*10+1);
+    // let a = 2;
+    
+    
+    
+    if(attempts.innerHTML > 0){
+        if(buttonId == randomNumber){
+            if(randomAward == 0){
+                earnedkey += 1;
+
+                localStorage.setItem('earnedkey', earnedkey);
+
+                document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${earnedkey}`;
+                alert('Congrats! Your award is a ' + award[randomAward]);
+                log.style.display = 'none';
+                questRandomContentRestart();
+                questRandom.style.display = 'none';
+                hide.style.display = 'block';
+
+                playerBar.style.backgroundColor = '#384d00';
+            }
+            else if(randomAward == 1){
+                let awardAmount = 10 * randomAmount;
+                money += awardAmount;
+                localStorage.setItem('money', money);
+                document.querySelector('.pCoins').innerHTML = `<i class="fas fa-coins coins playerBarIcon"></i>   ${money}`;
+
+                alert('Congrats! Your award is ' + awardAmount + ' ' + award[randomAward]);
+
+                log.style.display = 'none';
+                questRandom.style.display = 'none';
+                hide.style.display = 'block';
+
+                playerBar.style.backgroundColor = '#384d00';
+            }
+            else if(randomAward == 2){
+                let awardAmount = 10 * randomAmount;
+                health += awardAmount;
+
+                localStorage.setItem('health', health);
+                document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+                alert('Congrats! Your award is ' + awardAmount + ' ' + award[randomAward]);
+
+                log.style.display = 'none';
+                questRandom.style.display = 'none';
+                hide.style.display = 'block';
+
+                playerBar.style.backgroundColor = '#384d00';
+            }
+        }
+        else{
+            document.querySelector('#slumpen'+ buttonId).style.display = 'none';
+            attempts.innerHTML = attempts.innerHTML-1;
+        }
+    }
+    else if(attempts.innerHTML == 1){
+        alert('hej');
+    }
+
+}
+
+function playQuestRandom(){
+
+    attempts.innerHTML = 5;
+
+    document.querySelector('.questInformation').style.display = 'none';
+
+    playerBar.style.backgroundColor = 'transparent';
+
+    questRandom.style.display = 'block';
+
+    questRandomContentShow();
+
+}
+
+
+function questRandomContentRestart(){
+    questTitle.style.display = 'none';
+    questNameTitle.style.display = 'none';
+    attemptsLeft.style.display = 'none';
+    attempts.style.display = 'none';
+    document.querySelector('#slumpen1').style.display = 'none';
+    document.querySelector('#slumpen2').style.display = 'none';
+    document.querySelector('#slumpen3').style.display = 'none';
+    document.querySelector('#slumpen4').style.display = 'none';
+    document.querySelector('#slumpen5').style.display = 'none';
+    document.querySelector('#slumpen6').style.display = 'none';
+    document.querySelector('#slumpen7').style.display = 'none';
+    document.querySelector('#slumpen8').style.display = 'none';
+    document.querySelector('#slumpen9').style.display = 'none';
+    document.querySelector('#slumpen10').style.display = 'none';
+}
+
+function questRandomContentShow(){
+    questTitle.style.display = 'block';
+    questNameTitle.style.display = 'block';
+    attemptsLeft.style.display = 'block';
+    attempts.style.display = 'block';
+    document.querySelector('#slumpen1').style.display = 'inline';
+    document.querySelector('#slumpen2').style.display = 'inline';
+    document.querySelector('#slumpen3').style.display = 'inline';
+    document.querySelector('#slumpen4').style.display = 'inline';
+    document.querySelector('#slumpen5').style.display = 'inline';
+    document.querySelector('#slumpen6').style.display = 'inline';
+    document.querySelector('#slumpen7').style.display = 'inline';
+    document.querySelector('#slumpen8').style.display = 'inline';
+    document.querySelector('#slumpen9').style.display = 'inline';
+    document.querySelector('#slumpen10').style.display = 'inline';
+}
