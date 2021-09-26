@@ -7,12 +7,13 @@
     <title>Game Name</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css.css">
+    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
 </head>
 <body>
 
-    <div class="canvas-container">
+    <!-- <div class="canvas-container">
         <canvas id="canvas" style=" position:fixed; display: block;"></canvas>
-    </div>
+    </div> -->
 
     <audio loop autoplay>
         <source src="img/wii.mp3" type="audio/mpeg">
@@ -26,14 +27,20 @@
 
     </div> 
 
-  
+    <h1 style="display: none;" class="absolute centerText centerO gameOver">Game Over!</h1>
+
+    <h1 style="display: none;" class="absolute centerText centerO winner">Congrats!</h1>
+
+    <p style="display: none; width: 200px;" class="absolute centerText centerO gameEndText"></p>
+
+    <button onclick="restartGame()" style="display: none;" class="restart centerO absolute">Restart</button>
 
 
     <div class="hide">
 
         
         <div id="sprite">
-            <!-- <img src="img/mapStartPNG.png" alt=""> -->
+            <img src="img/player.png" alt="">
         </div>
 
 
@@ -45,11 +52,66 @@
 
     </div>
 
+
+
+    <div class="chest">
+
+        <h1 style="display: none;" class="chestTitle centerO centerText absolute">Chest</h1>
+
+        <p style="width: 240px; display: none;" class="chestSuccessP centerO centerText absolute"></p>
+
+        <p style="width: 240px; display: none;" class="chestFailureP centerO centerText absolute">Oh! You found a chest! But you do not have a key and you can not open it.</p>
+
+        <div style="width: 30px; z-index: 1; display: none;" class="absolute coinAnimation"><img src="img/Coin.png" alt=""></div>
+
+        <div class="chestSuccessBtn centerO absolute">
+
+            <button onclick="openChest()" style="display: none;" class="chestSuccessBtnOpen">Open -1   <i style="padding: 0;" class="fas fa-key key playerBarIcon"></i></button>
+            
+            <button onclick="acceptQuest(0)" style="display: none;" class="chestSuccessBtnNo ">No!</button>
+
+        </div>
+
+        <button onclick="acceptQuest(0)" style="display: none;" class="chestFailureBtn centerO absolute">Move On</button>
+
+        <div style="display: none;" class="lockedChest absolute centerO w-10"><img class="absolute" src="img/lockedChest.png" alt=""></div>
+
+        <div style="display: none;" class="unlockedChest absolute centerO w-10"><img class="absolute" src="img/unlockedChest.png" alt=""></div>
+
+
+
+    </div>
+
+
+    <!-- Monster -->
+
+    <div class="monsterDiv">
+
+        <h1 style="display: none;" class="monsterTitle centerO centerText absolute">Monster</h1>
+
+        <p style="width: 240px; display: none;" class="monsterP centerO centerText absolute">jvdsjieodoc sjiodojcsoi jiocsdjkccmjzlk </p>
+
+        <div style="display: none;" class="monsterBtn centerO absolute">
+
+            <button style="display: none;" class="monsterFightBtn">Fight</button>
+
+            <button style="display: none;" class="monsterGiveUp">Run</button>
+
+        </div>
+
+    </div>
+
+
+
+
+
             
 
     <div class="center conversation-log"><img src="img/map.png" alt=""></div>
 
+    <img src="img/player.png" class="absolute w-10 player char" id="5" alt="">
 
+    <img src="img/monster.png" class="absolute w-10 monster char" id="6" alt="">
 
 
     <div class="show">
@@ -62,12 +124,14 @@
 
             <img src="img/mandyBarn.png" class="absolute w-10 mandy char" id="4" alt="">
 
-            <img src="img/player.png" class="absolute w-10 player char" id="5" alt="">
+            
+
+            
 
         <h1 class="absolute place"></h1>
         <h2 class="absolute placeH2"></h2>
 
-        <h5 class="absolute placeH5"></h5>
+        <h5 style="width: 300px;" class="absolute placeH5 centerText"></h5>
 
         <p class="absolute pWorker"></p>
 
@@ -77,7 +141,7 @@
 
         <div class="yNBtns absolute">
 
-            <button onclick="acceptQuest(10, 0)" class="yes">Yes -10 <i class="fas fa-bolt bolt"></i></button>
+            <button onclick="acceptQuest(10)" class="yes">Yes -10 <i class="fas fa-bolt bolt"></i></button>
 
             <button onclick="hideContent()" class="no">No</button>
 
@@ -97,11 +161,17 @@
 
         <div class="absolute centerO">
 
-        <button class="" onclick="playQuestRandom()">Play</button>
+            <button class="" onclick="playQuestRandom()">Play</button>
+
+        </div>
 
     </div>
 
-    </div>
+
+
+    
+
+
 
     
 
