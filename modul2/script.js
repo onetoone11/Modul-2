@@ -146,6 +146,8 @@ let monsterFightBtn = document.querySelector('.monsterFightBtn');
 
 let monsterGiveUp = document.querySelector('.monsterGiveUp');
 
+let swordImg = document.querySelector('.swordImg');
+
 
 
 
@@ -331,7 +333,7 @@ monsterP.style.top = parseInt(screenHeight*0.3) + 'px';
 
 monsterBtn.style.top = parseInt(screenHeight*0.5) + 'px';
 
-
+swordImg.style.top = parseInt(screenHeight*0.5) + 'px';
 
 
 
@@ -480,6 +482,7 @@ function hideContent(){
         lisa.style.display = "none";
         bob.style.display = "none";
         mandy.style.display = "none";
+        log.style.display = 'none';
         playerBar.style.backgroundColor = "#384d00";  
 
     }
@@ -523,8 +526,6 @@ function conversationLog(place){
 
         let randomQuest = Math.floor(Math.random()*2);
         
-        // alert('Do you want to play a round of ' + grinderQuests[randomQuest][0] + ' ' + grinderQuests[randomQuest][1]);
-
         placeH2.innerHTML = grinderQuests[randomQuest][0];
         placeH5.innerHTML = grinderQuests[randomQuest][1];
 
@@ -539,6 +540,11 @@ function conversationLog(place){
 
         playerBar.style.backgroundColor = 'transparent';
 
+        let randomQuest = Math.floor(Math.random()*2);
+        
+        placeH2.innerHTML = grinderQuests[randomQuest][0];
+        placeH5.innerHTML = grinderQuests[randomQuest][1];
+
     }
     else if(place == fishHouseContent.building){
         
@@ -549,6 +555,11 @@ function conversationLog(place){
         placeH1.innerHTML = fishHouseContent.building.toUpperCase();
 
         playerBar.style.backgroundColor = 'transparent';
+
+        let randomQuest = Math.floor(Math.random()*2);
+        
+        placeH2.innerHTML = grinderQuests[randomQuest][0];
+        placeH5.innerHTML = grinderQuests[randomQuest][1];
 
     }
     else if(place == barnContent.building){
@@ -561,6 +572,11 @@ function conversationLog(place){
 
         playerBar.style.backgroundColor = 'transparent';
 
+        let randomQuest = Math.floor(Math.random()*2);
+        
+        placeH2.innerHTML = grinderQuests[randomQuest][0];
+        placeH5.innerHTML = grinderQuests[randomQuest][1];
+
     }
     
 }
@@ -569,15 +585,42 @@ function conversationLog(place){
 
 function acceptQuest(healthVal){
 
+    coin.style.display = 'none';
+    unlockedChest.style.display = 'none';
+    chestFailureBtn.style.display = 'none';
+
     let randomChestMonster = Math.floor(Math.random()*15);
 
-    if(randomChestMonster == 1){
+    if(randomChestMonster == 0){
         // Chest
+        health -= healthVal;
+        document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+        localStorage.setItem('health', health);
+        player.style.display = 'none';
+        monster.style.display = 'none';
         chest();
+        
 
     }
-    else if(randomChestMonster == 0){
+    else if(randomChestMonster == 1){
        // monster
+
+       // Chest none
+       unlockedChest.style.display = 'none';
+       lockedChest.style.display = 'none';
+       coin.style.display = 'none';
+       chestFailureBtn.style.display = 'none';
+       chestSuccessBtnOpen.style.display = 'none';
+       chestSuccessBtnNo.style.display = 'none';
+       chestSuccessP.style.display = 'none';
+       chestFailureP.style.display = 'none';
+       chestTitle.style.display = 'none';
+
+       health -= healthVal;
+        document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+        localStorage.setItem('health', health);
+
+
        monsterI();
 
     }
@@ -597,6 +640,8 @@ function acceptQuest(healthVal){
 
         questInformation.style.display = 'block';
 
+        player.style.display = 'none';
+
         // Chest none
         unlockedChest.style.display = 'none';
         lockedChest.style.display = 'none';
@@ -607,6 +652,16 @@ function acceptQuest(healthVal){
         chestSuccessP.style.display = 'none';
         chestFailureP.style.display = 'none';
         chestTitle.style.display = 'none';
+
+        // Monster none
+        monster.style.display = 'none';
+        monsterDiv.style.display = 'none';
+        monsterTitle.style.display = 'none';
+        monsterP.style.display = 'none';
+        monsterBtn.style.display = 'none';
+        monsterFightBtn.style.display = 'none';
+        monsterGiveUp.style.display = 'none';
+
 
         
 
@@ -679,6 +734,7 @@ function monsterI(){
     player.style.display = 'block';
     monster.style.display = 'block';
 
+    monsterDiv.style.display = 'block';
     monsterTitle.style.display = 'block';
     monsterP.style.display = 'block';
     monsterP.innerHTML = 'Oh no! You met a monster! Do you want to fight or run away?'
@@ -688,30 +744,121 @@ function monsterI(){
 
 }
 
+function fight(){
 
-function takeMoney(price){
-    if(money <= 0 || money - price < 0 ){
-        alert('Du har inte råd!');
+    let randomFightPlayer = Math.floor(Math.random()*3);
+    let randomFightMonster = Math.floor(Math.random()*3);
+
+    monsterGiveUp.style.display = 'none';
+    monsterFightBtn.style.display = 'none';
+    swordImg.style.display = 'block';
+
+
+    if(randomFightPlayer > randomFightMonster ){
+        fightPlayerWin();
     }
-    else{
-        money -= price;
-        alert(money);
-        document.querySelector('.pCoins').innerHTML = `<i class="fas fa-coins coins playerBarIcon"></i>   ${money}`;
+    else if(randomFightPlayer == randomFightMonster){
+        fightPlayerE();
     }
+    else if(randomFightPlayer < randomFightMonster){
+        fightPlayerL();
+    }
+
+}
+
+function fightPlayerWin(){
+    let wHealth = Math.floor(Math.random()*31);
+    health += wHealth;
+    localStorage.setItem('health', health);
+    document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+
+    let wMoney = Math.floor(Math.random()*10);
+    money += wMoney;
+    localStorage.setItem('money', money);
+    document.querySelector('.pCoins').innerHTML = `<i class="fas fa-coins coins playerBarIcon"></i>   ${money}`;
+
+    let wKey = Math.floor(Math.random()*2);
+    earnedkey += wKey;
+    localStorage.setItem('earnedkey', earnedkey);
+    document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${earnedkey}`;
+
+    monsterP.innerHTML = `Congrats! You earned ${wHealth} energy, ${wMoney} coins and ${wKey} key`;
+
+    setTimeout(function () {
+        monsterTitle.style.display = 'none';
+        monsterP.style.display = 'none';
+        swordImg.style.display = 'none';
+        acceptQuest(0);
+    }, 3000);
+
+}
+
+function fightPlayerE() {
+    let wHealth = Math.floor(Math.random()*15);
+    health -= wHealth;
+    localStorage.setItem('health', health);
+    document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+
+    let wMoney = Math.floor(Math.random()*5);
+    money += wMoney;
+    localStorage.setItem('money', money);
+    document.querySelector('.pCoins').innerHTML = `<i class="fas fa-coins coins playerBarIcon"></i>   ${money}`;
+
+    let wKey = Math.floor(Math.random()*2);
+    earnedkey += wKey;
+    localStorage.setItem('earnedkey', earnedkey);
+    document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${earnedkey}`;
+
+    monsterP.innerHTML = `You lost ${wHealth} energy and earned ${wMoney} coins and ${wKey} key`;
+
+    setTimeout(function () {
+        monsterTitle.style.display = 'none';
+        monsterP.style.display = 'none';
+        swordImg.style.display = 'none';
+        acceptQuest(0);
+    }, 3000);
+}
+
+function fightPlayerL(){
+    let wHealth = Math.floor(Math.random()*31);
+    health -= wHealth;
+    localStorage.setItem('health', health);
+    document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+
+    monsterP.innerHTML = `You lost against the Monster. You lost ${wHealth} energy.`;
+
+    setTimeout(function () {
+        monsterTitle.style.display = 'none';
+        monsterP.style.display = 'none';
+        swordImg.style.display = 'none';
+        acceptQuest(0);
+    }, 3000);
+}
+
+function run(){
+    let rLost = Math.floor(Math.random()*31);
+    health -= rLost;
+    localStorage.setItem('health', health);
+    document.querySelector('.pBolt').innerHTML = `<i class="fas fa-bolt bolt playerBarIcon"></i>   ${health}`;
+
+    // Monster none
+        monster.style.display = 'none';
+        monsterDiv.style.display = 'none';
+        monsterTitle.style.display = 'none';
+        monsterP.style.display = 'none';
+        monsterBtn.style.display = 'none';
+        monsterFightBtn.style.display = 'none';
+        monsterGiveUp.style.display = 'none';
+
+        player.style.display = 'none';
+
+    acceptQuest(0);
+
 }
 
 
 
-function useKey(keys){
-    if(earnedkey <= 0 || earnedkey - keys < 0){
-        alert('Du har inte tillräckligt med nycklar');
-    }
-    else{
-        earnedkey -= keys;
-        alert(earnedkey);
-        document.querySelector('.pKey').innerHTML = `<i class="fas fa-key key playerBarIcon"></i>   ${earnedkey}`;
-    }
-}
+
 
 
 function restartGame(){
@@ -722,6 +869,15 @@ function restartGame(){
 function exhausted(){
     // alert("YOU ARE EXHAUSTED!");
 
+        // Monster none
+        monster.style.display = 'none';
+        monsterDiv.style.display = 'none';
+        monsterTitle.style.display = 'none';
+        monsterP.style.display = 'none';
+        monsterBtn.style.display = 'none';
+        monsterFightBtn.style.display = 'none';
+        monsterGiveUp.style.display = 'none';
+
     log.style.display = 'block';
     hide.style.display = 'none';
     playerBar.style.display = 'none';
@@ -730,9 +886,11 @@ function exhausted(){
     gameEndText.style.display = 'block';
     questInformation.style.display = 'none';
     chestDiv.style.display = 'none';
+    player.style.display = 'none';
 
     gameEndText.innerHTML = `You are exhausted! You need to rest. During your journey you earned 
     ${money} coins and ${earnedkey} keys`;
+
 
 }
 
@@ -750,6 +908,7 @@ function broke(){
 
     gameEndText.innerHTML = `You are broke! During your journey you earned 
     ${earnedkey} keys and your health was ${health} hp`;
+
 
 }
 
