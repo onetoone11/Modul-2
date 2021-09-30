@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Name</title>
+    <title>Vita in ludum</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css.css">
     <!-- <link rel="shortcut icon" href="favicon.ico"> -->
@@ -91,11 +91,13 @@
 
         <p style="width: 240px; display: none;" class="monsterP centerO centerText absolute">jvdsjieodoc sjiodojcsoi jiocsdjkccmjzlk </p>
 
+        <img class="absolute centerO swordImg" style="width: 10%; display: none;" src="img/swords.png" alt="">
+
         <div style="display: none;" class="monsterBtn centerO absolute">
 
-            <button style="display: none;" class="monsterFightBtn">Fight</button>
+            <button onclick="fight()" style="display: none;" class="monsterFightBtn">Fight</button>
 
-            <button style="display: none;" class="monsterGiveUp">Run</button>
+            <button onclick="run()" style="display: none;" class="monsterGiveUp">Run</button>
 
         </div>
 
